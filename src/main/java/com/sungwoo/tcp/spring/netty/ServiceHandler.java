@@ -7,15 +7,16 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.Charset;
 
+@Slf4j
 @ChannelHandler.Sharable
 public class ServiceHandler extends ChannelInboundHandlerAdapter {
-
-    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -27,7 +28,7 @@ public class ServiceHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
-        logger.debug("message : {} ",byteBuf.toString(Charset.defaultCharset()));
+        log.info("message : {} ",byteBuf.toString(Charset.defaultCharset()));
         channels.writeAndFlush(msg);
     }
 }
