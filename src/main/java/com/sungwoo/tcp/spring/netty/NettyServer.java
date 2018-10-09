@@ -26,33 +26,21 @@ public class NettyServer {
     @Value("${tcp.port}")
     private int tcpPort;
 
-    /**
-     * The Boss count.
-     */
     @Value("${boss.thread.count}")
     private int bossCount;
 
-    /**
-     * The Worker count.
-     */
     @Value("${worker.thread.count}")
     private int workerCount;
 
-    /**
-     * The constant SERVICE_HANDLER.
-     */
     private static final ServiceHandler SERVICE_HANDLER = new ServiceHandler();
 
-    /**
-     * Start.
-     */
     public void start() {
         /**
-         * 클라이언트 연결을 수락하는 부모 스레드 그룹
+         * boss thread for connection
          */
         EventLoopGroup bossGroup = new NioEventLoopGroup(bossCount);
         /**
-         * 연결된 클라이언트ㄹ의 소켓으로 부터 데이터 입출력 및 이벤트를 담당하는 자식 스레드
+         * worker thread for read task from socket.
          */
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -61,8 +49,8 @@ public class NettyServer {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)                              //서버 소켓 입출력 모드를 NIO로 설정
-                    .handler(new LoggingHandler(LogLevel.INFO))                         //서버 소켓 채널 핸들러 등록
+                    .channel(NioServerSocketChannel.class)
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {             //송수신 되는 데이터 가공 핸들러
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {

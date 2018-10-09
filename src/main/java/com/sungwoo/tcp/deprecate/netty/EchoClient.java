@@ -1,4 +1,4 @@
-package com.sungwoo.tcp.netty;
+package com.sungwoo.tcp.deprecate.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;

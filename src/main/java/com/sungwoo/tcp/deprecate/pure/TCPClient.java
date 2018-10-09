@@ -1,4 +1,4 @@
-package com.sungwoo.tcp.pure;
+package com.sungwoo.tcp.deprecate.pure;
 
 import lombok.extern.slf4j.Slf4j;
 

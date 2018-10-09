@@ -5,14 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @SpringBootApplication(scanBasePackages = "com.sungwoo.tcp")
-public class NettyStarter {
+public class NettyApplication {
 
     @Bean
     public BlockingQueue queue() {
@@ -23,7 +22,7 @@ public class NettyStarter {
     private ApplicationContext context;
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(NettyStarter.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(NettyApplication.class, args);
 
         NettyServer nettyServer = context.getBean(NettyServer.class);
         nettyServer.start();
